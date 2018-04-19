@@ -119,7 +119,15 @@ public class Game extends JPanel implements KeyListener
     void update()
     {
         this.requestFocus();
-        if(!gameOver)
+        boolean paused;
+        if(frame.getState()==Frame.ICONIFIED)
+        {
+            paused=true;
+        }else{
+            paused=false;
+        }
+
+        if(!gameOver&&!paused)
         {
             if(ticksSinceKey>2)
             {
@@ -312,9 +320,10 @@ public class Game extends JPanel implements KeyListener
             FontMetrics fontMetric = g.getFontMetrics();
 
             g.setColor(Tetromino.colors[next]);
-            g.drawString("Restart [Delete]",(int)windowSize.getWidth()-fontMetric.stringWidth("Restart [Delete]"),(int)fontMetric.getHeight());
-            g.drawString("Change Mode [=]",(int)windowSize.getWidth()-fontMetric.stringWidth("Change Mode [=]"),(int)(fontMetric.getHeight()*2)+((fontMetric.getHeight()/2)*1));
-            g.drawString("Exit [Esc]",(int)windowSize.getWidth()-fontMetric.stringWidth("Exit [Esc]"),(int)(fontMetric.getHeight()*3)+((fontMetric.getHeight()/2)*2));
+            g.drawString("Restart [Delete]",(int)windowSize.getWidth()-fontMetric.stringWidth("Restart [Delete] "),(int)fontMetric.getHeight());
+            g.drawString("Pause [P]",(int)windowSize.getWidth()-fontMetric.stringWidth("Pause [P] "),(int)(fontMetric.getHeight()*2)+((fontMetric.getHeight()/2)*1));
+            g.drawString("Change Mode [=]",(int)windowSize.getWidth()-fontMetric.stringWidth("Change Mode [=] "),(int)(fontMetric.getHeight()*3)+((fontMetric.getHeight()/2)*2));
+            g.drawString("Exit [Esc]",(int)windowSize.getWidth()-fontMetric.stringWidth("Exit [Esc] "),(int)(fontMetric.getHeight()*4)+((fontMetric.getHeight()/2)*3));
 
             if(xOffset>0)
             {
@@ -461,14 +470,9 @@ public class Game extends JPanel implements KeyListener
             classicMode=!classicMode;
         }
 
-        if(k==KeyEvent.VK_ENTER)
+        if(k==KeyEvent.VK_P)
         {
-            if(speed>=speeds.length-1)
-            {
-                speed = 1;
-            }else{
-                speed++;
-            }
+            frame.setState(Frame.ICONIFIED);
         }
     }
 
