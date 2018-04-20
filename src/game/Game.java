@@ -80,7 +80,7 @@ public class Game extends JPanel implements KeyListener
         this.setOpaque(false);
         frame.setAlwaysOnTop(true);
         frame.setUndecorated(true);
-        frame.setBackground(new Color(0,0,0,20));
+        frame.setBackground(new Color(0,0,0,255));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setResizable(false);
         frame.add(this);
@@ -321,9 +321,10 @@ public class Game extends JPanel implements KeyListener
 
             g.setColor(Tetromino.colors[next]);
             g.drawString("Restart [Delete]",(int)windowSize.getWidth()-fontMetric.stringWidth("Restart [Delete] "),(int)fontMetric.getHeight());
-            g.drawString("Pause [P]",(int)windowSize.getWidth()-fontMetric.stringWidth("Pause [P] "),(int)(fontMetric.getHeight()*2)+((fontMetric.getHeight()/2)*1));
-            g.drawString("Change Mode [=]",(int)windowSize.getWidth()-fontMetric.stringWidth("Change Mode [=] "),(int)(fontMetric.getHeight()*3)+((fontMetric.getHeight()/2)*2));
-            g.drawString("Exit [Esc]",(int)windowSize.getWidth()-fontMetric.stringWidth("Exit [Esc] "),(int)(fontMetric.getHeight()*4)+((fontMetric.getHeight()/2)*3));
+            g.drawString("Pause/Hide [P]",(int)windowSize.getWidth()-fontMetric.stringWidth("Pause/Hide [P] "),(int)(fontMetric.getHeight()*2)+((fontMetric.getHeight()/2)*1));
+            g.drawString("Toggle Background [B]",(int)windowSize.getWidth()-fontMetric.stringWidth("Toggle Background [B] "),(int)(fontMetric.getHeight()*3)+((fontMetric.getHeight()/2)*2));
+            g.drawString("Change Mode [=]",(int)windowSize.getWidth()-fontMetric.stringWidth("Change Mode [=] "),(int)(fontMetric.getHeight()*4)+((fontMetric.getHeight()/2)*3));
+            g.drawString("Exit [Esc]",(int)windowSize.getWidth()-fontMetric.stringWidth("Exit [Esc] "),(int)(fontMetric.getHeight()*5)+((fontMetric.getHeight()/2)*4));
 
             if(xOffset>0)
             {
@@ -375,7 +376,7 @@ public class Game extends JPanel implements KeyListener
                 g.setColor(Tetromino.colors[next]);
                 int x = 0;
                 int y = fontMetric.getHeight();
-                g.drawString("Score: "+score,x,y);
+                g.drawString(" Score: "+score,x,y);
             }
 
             if(gameOver)
@@ -473,6 +474,16 @@ public class Game extends JPanel implements KeyListener
         if(k==KeyEvent.VK_P)
         {
             frame.setState(Frame.ICONIFIED);
+        }
+
+        if(k==KeyEvent.VK_B)
+        {
+            if(frame.getBackground().getAlpha()==20)
+            {
+                frame.setBackground(new Color(0,0,0,255));
+            }else{
+                frame.setBackground(new Color(0,0,0,20));
+            }
         }
     }
 
